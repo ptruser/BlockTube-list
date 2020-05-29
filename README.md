@@ -20,5 +20,5 @@ But if you create an issue or send a pull request, the reason will be added to t
 
 <details>
   <summary><b>On the screenshot show full list of videos from `Trending`. (‏‎14:19 27.05.2020 - Moscow time)</b></summary>
-![ru](./www/ru-tube-example.png)
+  <img src="./www/ru-tube-example.png" alt="">
 </details>
