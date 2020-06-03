@@ -6,7 +6,7 @@ My [BlockTube](https://github.com/amitbl/blocktube) export config.
 Now, most of list fields (channels, videos, etc.) is Russian "trash" content.
 
 Currently, I have no mention of why this or that content is blocked.
-But if you create an issue or send a pull request, the reason will be added to the `reasons.txt`.
+But if you create an issue or send a pull request, the reason will be added to the `_proofs\reasons.txt`.
 
 ## Install
 
