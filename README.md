@@ -3,12 +3,12 @@ My [BlockTube](https://github.com/amitbl/blocktube) export config.
 
 ## About
 
-Now, most of list fields (channels, videos, etc.) is Russian "trash" content.
+Most of list fields (channels, videos, etc.) is Russian "trash" content.
 
 Currently, I have no mention of why this or that content is blocked.
 But if you create an issue or send a pull request, the reason will be added to the `_proofs\reasons.txt`.
 
-## Install
+## Installation
 
 0. Install BlockTube for your browser.
 1. Download `1nfdev_blocktube_backup.json`.
