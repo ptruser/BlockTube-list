@@ -3,6 +3,25 @@
 
 import json
 import os
+import difflib
+
+from rich import print
+
+def diff(orig_data, diff_data):
+	minuses = 0
+	position = 0
+	stdout = ""
+	for i, s in enumerate(difflib.ndiff(orig_data, diff_data)):
+		# if s[0] == ' ':
+		# 	stdout += diff_data[i-minuses]
+		# elif s[0] == '-':
+		# 	minuses += 1
+		if s[0] == '+':
+			stdout += f'[bold green]{diff_data[i-minuses]}[/bold green]\n'
+
+	print(stdout)
+
+# -------------------------- #
 
 def clear_empty_elements(l):
 	for index, line in enumerate(l):
