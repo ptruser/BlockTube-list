@@ -33,35 +33,60 @@ def beautify_comments(l):
 		if line.startswith('//'):
 			l[index] = line[27:]
 
-def merge_elements(lhs_l, rhs_l):
-	return lhs_l + [x for x in rhs_l if x not in lhs_l]
+def merge_elements(old, new):
+	print('Diff:')
+	r = old + [x for x in new if x not in old]
+	diff(old, r)
+	return r
+
+# -------------------------- #
 
 def remove_file(path):
 	os.remove(path)
 
+# -------------------------- #
+
 prefix = '' # Maybe will be using in the future
-original_backup_filepath = prefix + 'blocktube_backup.json'
+current_backup_filepath = prefix + 'blocktube_backup.json'
 old_backup_filepath      = prefix + '1nfdev_blocktube_backup.json'
 new_backup_filepath      = prefix + '1nfdev_blocktube_backup.temp.json'
 output_backup_filepath   = prefix + '1nfdev_blocktube_backup.json'
 
 os.rename(old_backup_filepath, new_backup_filepath)
 
-with open(original_backup_filepath, 'r', encoding="utf8") as File:
-	original_data = json.loads(File.read())
+# ----- Current config ----- #
 
-original_channels = original_data["filterData"]["channelId"]
-original_videos   = original_data["filterData"]["videoId"]
+with open(current_backup_filepath, 'r', encoding="utf8") as File:
+	current_data = json.loads(File.read())
+
+current_channels = current_data["filterData"]["channelId"]
+current_videos   = current_data["filterData"]["videoId"]
+
+print('[bold cyan]Processing current configuration...[/bold cyan]')
+
+clear_empty_elements(current_channels)
+print('ChannelID field cleared of empty elements')
+clear_empty_elements(current_videos)
+print('VideoID field cleared of empty elements')
+
+beautify_comments(current_channels)
+print('ChannelID comments was be beautified')
+beautify_comments(current_videos)
+print('VideoID comments was be beautified')
+
+# ----- Latest backup ----- #
 
 with open(new_backup_filepath, 'r', encoding="utf8") as File:
 	Data = json.loads(File.read())
 
-channels = Data["filterData"]["channelId"]
-videos   = Data["filterData"]["videoId"]
+channels = Data["filterData"]["channelId"]; lbc = channels
+videos   = Data["filterData"]["videoId"]; lbv = videos
 
-channels = merge_elements(channels, original_channels)
+print('[bold cyan]Processing latest backup configuration...[/bold cyan]')
+
+channels = merge_elements(channels, current_channels)
 print('ChannelID field merged')
-videos   = merge_elements(videos, original_videos)
+videos   = merge_elements(videos, current_videos)
 print('VideoID field merged')
 
 clear_empty_elements(channels)
@@ -74,16 +99,18 @@ print('ChannelID comments was be beautified')
 beautify_comments(videos)
 print('VideoID comments was be beautified')
 
+# -------------------------- #
+
 Data["filterData"]["channelId"] = channels
 Data["filterData"]["videoId"]   = videos
 
 with open(output_backup_filepath, 'w', encoding="utf8") as File:
 	File.write(json.dumps(Data, indent=2, ensure_ascii=False))
 
-print('Backup file created')
+print('[green]Backup file created[/green]')
 
 remove_file(new_backup_filepath)
-remove_file(original_backup_filepath)
+remove_file(current_backup_filepath)
 
-print('Old backup deleted')
-print('Done!')
+print('[red]Old backup deleted[/red]')
+print('[bold green]Done![/bold green]')
